@@ -9,7 +9,7 @@ import { ModalService } from '../../services/modal.service';
 export class ModalComponent implements OnInit, OnDestroy {
   @Input() modalId = '';
 
-  constructor(public modalService: ModalService, public el: ElementRef) { }
+  constructor(public modal: ModalService, public el: ElementRef) { }
 
   ngOnInit(): void {
     document.body.appendChild(this.el.nativeElement);
@@ -20,6 +20,6 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
   closeModal() {
-    this.modalService.toggleModal(this.modalId);
+    this.modal.toggleModal(this.modalId);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
@@ -6,7 +6,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   credentials = {
     email: '',
     password: ''
@@ -17,9 +17,6 @@ export class LoginComponent implements OnInit {
   inSubmission: boolean = false;
 
   constructor(private auth: AngularFireAuth) { }
-
-  ngOnInit(): void {
-  }
 
   async login(): Promise<void> {
     this.showAlert = true;
