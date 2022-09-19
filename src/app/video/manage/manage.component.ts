@@ -14,24 +14,26 @@ export class ManageComponent implements OnInit {
   videoOrder = '1';
   clips: IClip[] = [];
   activeClip: IClip | null = null;
-  sort$?: BehaviorSubject<string>;
+  sort$: BehaviorSubject<string>;
 
 
   constructor(private router: Router,
     private route: ActivatedRoute,
     private clipService: ClipService,
-    private modal: ModalService) { }
+    private modal: ModalService
+  ) {
+    this.sort$ = new BehaviorSubject<string>(this.videoOrder);
+  }
 
   ngOnInit(): void {
-    this.navigateWithSort(this.videoOrder);
+    //this.navigateWithSort(this.videoOrder);
 
     this.route.queryParamMap.subscribe((params: Params) => {
       this.videoOrder = params.get('sort') === '2'!! ? params.get('sort') : '1'
-      //this.videoOrder = params.sort == '2' ? params.sort : '1'
-      this.navigateWithSort(this.videoOrder);
-      this.sort$?.next(this.videoOrder);
+      //this.navigateWithSort(this.videoOrder);
+      this.sort$.next(this.videoOrder);
     });
-    this.clipService.getUsersClips().subscribe(docs => {
+    this.clipService.getUsersClips(this.sort$).subscribe(docs => {
       this.clips = [];
 
       docs.forEach(doc => {
@@ -66,5 +68,25 @@ export class ManageComponent implements OnInit {
     this.activeClip = clip;
 
     this.modal.toggleModal('editClip');
+  }
+
+  update($event: IClip) {
+    this.clips.forEach((element, index) => {
+      if (element.docID === $event.docID) {
+        this.clips[index].title = $event.title;
+      }
+    })
+  }
+
+  deleteClip($event: Event, clip: IClip) {
+    $event.preventDefault();
+
+    this.clipService.deleteClip(clip);
+
+    this.clips.forEach((element, index) => {
+      if (element.docID === clip.docID) {
+        this.clips.splice(index, 1);
+      }
+    })
   }
 }

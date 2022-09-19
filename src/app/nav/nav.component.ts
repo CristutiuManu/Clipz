@@ -7,13 +7,10 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent implements OnInit {
+export class NavComponent {
   constructor(public modalService: ModalService,
     public auth: AuthService
   ) { }
-
-  ngOnInit(): void {
-  }
 
   openModal($event: Event) {
     $event.preventDefault();
