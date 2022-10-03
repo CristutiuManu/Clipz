@@ -10,12 +10,10 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    pathMatch: 'full'
   },
   {
     path: 'about',
     component: AboutComponent,
-    pathMatch: 'full'
   },
   {
     path: 'clip/:id',
@@ -25,9 +23,12 @@ const routes: Routes = [
     },
   },
   {
+    path: '',
+    loadChildren: async () => (await import('./video/video.module')).VideoModule
+  },
+  {
     path: '**',
     component: NotFoundComponent,
-    pathMatch: 'full'
   }
 ];
 
