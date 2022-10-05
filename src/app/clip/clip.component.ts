@@ -27,7 +27,7 @@ export class ClipComponent implements OnInit {
 
       this.player?.src({
         src: this.clip.url,
-        type: 'videp/mp4'
+        type: 'video/mp4'
       })
     })
   }
